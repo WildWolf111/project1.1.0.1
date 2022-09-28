@@ -2,7 +2,7 @@
 import Layout from "../../layouts/main.vue";
 import PageHeader from "@/components/page-header";
 import appConfig from "../../../app.config";
-import CategoriesDataService from "/src/services/CategoriesDataService";
+import UniversalDataService from "/src/services/UniversalDataService";
 
 export default {
   
@@ -11,11 +11,11 @@ export default {
     meta: [{ name: "description", content: appConfig.description }],
   },
   
- data() {
+  data() {
     return {
        
-      Categories: [],
-      currentCategories: null,
+      Brands: [],
+      currentBrands: null,
       currentIndex: -1,
       title: "",
 
@@ -44,8 +44,22 @@ export default {
                 value: ''
       }],
       search:"",
+                type_list:'categories/list',//(это часть URL-list)
+                main_type:'categories',//(это часть URL)
+                list_items:[],
+                title: "categories",
+                items: [
+                    {
+                        text: "Главная",
+                        href: "/",
+                    },
+                    {
+                        text: "categories",
+                        active: true,
+                    },
+   
+                ]};
     
-    }; 
        
   },
 
@@ -53,7 +67,7 @@ export default {
     Layout,
     PageHeader,
   },
-   methods: {
+  methods: {
     setPage(numPage){
  console.log(this.setPage)
         this.page = numPage;
@@ -77,78 +91,29 @@ export default {
            this.jsonFields = [];
        }
 
+       UniversalDataService.setPath(this.type_list)
+       UniversalDataService.list(this.jsonPages)
+       .then(response => {
 
-       CategoriesDataService.getAll(this.jsonFields,[],this.jsonPages)
-        .then(response => {
-         
-          this.Categories = response.data.List;
-           
-          this.perPage = response.data.pg_length;
-          
-          this.page = response.data.pg_number;
-          
-          let i=0;
-          for(i=0; i<response.data.total_pg;i++){
-              this.pages[i]=i+1;
-              console.log(response.data.pg_length)
-              console.log(response.data.total_pg)
-          }
+                    //dispatch('notification/success', 'Получение списка прошло успешно', { root: true });
+                    this.list_items = response.data.List;
 
-         
-        })
-        .catch(e => {
-          console.log(e);
-        });
+                    console.log(response.data.List)
+
+                    this.perPage = response.data.pg_length;
+
+                    this.page = response.data.pg_number;
+
+                    let i=0;
+                    for(i=0; i<response.data.total_pg;i++){
+                    this.pages[i]=i+1;}
+                    })
+                    .catch(error => {
+                    //dispatch('notification/error', error, { root: true });
+                    console.log(error);
+                    });
+
     },
-
-    refreshList() {
-      this.retrieveCategories();
-      this.currentCategories = null;
-      this.currentIndex = -1;
-    },
-
-    setActiveCategories(categorys, index) {
-      this.currentCategories = categorys;
-      this.currentIndex = categorys ? index : -1;
-    },
-
-    removeAllCategories() {
-       CategoriesDataService.deleteAll()
-        .then(response => {
-     
-          this.refreshList();
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    
-
-    getCategoryByName(){
-         this.retrieveCategories();
-         this.pages = [];
-      
-    },
-
-     deleteCategory(id) {
-     
-      CategoriesDataService.delete(id)
-        .then(response => {
-        
-         
-        if (response.data.message = 202){
-        this.retrieveCategories();
-        console.log()
-        }
-        else{
-        return response.data.message}
-        
-        })
-        .catch(e => {
-          console.log(e);
-        });
-        
-    }
   },
   mounted() {
     this.retrieveCategories();
@@ -190,18 +155,18 @@ export default {
         </tr>
     </thead>
     <tbody>
-        <tr v-for="(Category, index) in Categories" :key="index">
+        <tr v-for="item  in list_items" :key="item.id">
     
            
-            <td>{{ Category.id }}</td>
-            <td>{{ Category.name }}</td>
-            <td>{{ Category.slug }}</td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.slug }}</td>
            
             
             <td>
                 <div class="hstack gap-3 flex-wrap">
-                   <router-link :to="{name: 'CategoriesEdit', params: { id: Category.id }}"> <a href="javascript:void(0);" class="link-primary fs-15"><i class="ri-edit-2-line"></i></a></router-link>
-                    <a href="javascript:void(0);" class="link-success fs-15"><i class="ri-delete-bin-line" @click="deleteCategory(Category.id)"></i></a>
+                   <router-link :to="{name: 'CategoriesEdit', params: { id: item.id }}"> <a href="javascript:void(0);" class="link-primary fs-15"><i class="ri-edit-2-line"></i></a></router-link>
+                    <a href="javascript:void(0);" class="link-success fs-15"><i class="ri-delete-bin-line" @click="deleteCategory(item.id)"></i></a>
                 </div>
             </td>
         </tr>

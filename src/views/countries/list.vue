@@ -36,49 +36,61 @@
             Layout,
             PageHeader,
         },
-        methods:{
+        methods: {
+    setPage(numPage){
+ console.log(this.setPage)
+        this.page = numPage;
+         this.retrieveCountries();
+        
+    },
+    retrieveCountries() {
+         console.log("*******************")
+          console.log(this.page)
+        this.jsonPages = {
+          pg_number:this.page,
+          pg_length: this.perPage
+      };
 
-            list(){
+      if (this.search!=""){
+       this.jsonFields = [{
+          field:"name",
+          value: this.search
+       }];
+       }else{
+           this.jsonFields = [];
+       }
 
-                UniversalDataService.setPath(this.type_list);
-                UniversalDataService.list([])
-                    .then(response => {
+       UniversalDataService.setPath(this.type_list)
+       UniversalDataService.list(this.jsonPages)
+       .then(response => {
 
-                        //dispatch('notification/success', 'Получение списка прошло успешно', { root: true });
-                        this.list_items = response.data.List;
-                        
+                    //dispatch('notification/success', 'Получение списка прошло успешно', { root: true });
+                    this.list_items = response.data.List;
+
+                    console.log(response.data.List)
+
+                    this.perPage = response.data.pg_length;
+
+                    this.page = response.data.pg_number;
+
+                    let i=0;
+                    for(i=0; i<response.data.total_pg;i++){
+                    this.pages[i]=i+1;}
                     })
                     .catch(error => {
-                        //dispatch('notification/error', error, { root: true });
-                        console.log(error);
+                    //dispatch('notification/error', error, { root: true });
+                    console.log(error);
                     });
 
+    },
 
-            },
-            remove(id){
-                UniversalDataService.setPath(this.main_type);
-                UniversalDataService.delete(id)
-                    .then(() => {
-                        //dispatch('notification/success', 'Удаление прошло успешно', { root: true });
-                        this.list();
-                    })
-                    .catch(error => {
-                        //dispatch('notification/error', error, { root: true });
-                        console.log(error);
-                    });
-
-            },
-            edit(id){
-                router.push('/'+this.main_type+'/'+id);
-
-            }
-
-        },
-
-        mounted() {
-            this.list();
-        },
-    };
+   
+  },
+  mounted() {
+    this.retrieveCountries();
+  },
+    
+};
 </script>
 
 <template>

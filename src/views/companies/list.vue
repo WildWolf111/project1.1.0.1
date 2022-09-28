@@ -43,9 +43,22 @@ export default {
                 name:'',
                 value: ''
       }],
-      search:"",
+      type_list:'companies/list',//(это часть URL-list)
+                main_type:'companies',//(это часть URL)
+                list_items:[],
+                title: "companies",
+                items: [
+                    {
+                        text: "Главная",
+                        href: "/",
+                    },
+                    {
+                        text: "companies",
+                        active: true,
+                    },
+   
+                ]};
     
-    }; 
        
   },
 
@@ -53,7 +66,7 @@ export default {
     Layout,
     PageHeader,
   },
-   methods: {
+  methods: {
     setPage(numPage){
  console.log(this.setPage)
         this.page = numPage;
@@ -77,78 +90,29 @@ export default {
            this.jsonFields = [];
        }
 
+       UniversalDataService.setPath(this.type_list)
+       UniversalDataService.list(this.jsonPages)
+       .then(response => {
 
-       CompaniesDataService.getAll(this.jsonFields,[],this.jsonPages)
-        .then(response => {
-         console.log(response.data)
-          this.Companies = response.data.List;
-           
-          this.perPage = response.data.pg_length;
-          
-          this.page = response.data.pg_number;
-          
-          let i=0;
-          for(i=0; i<response.data.total_pg;i++){
-              this.pages[i]=i+1;
-              console.log(response.data.pg_length)
-              console.log(response.data.total_pg)
-          }
+                    //dispatch('notification/success', 'Получение списка прошло успешно', { root: true });
+                    this.list_items = response.data.List;
 
-         
-        })
-        .catch(e => {
-          console.log(e);
-        });
+                    console.log(response.data.List)
+
+                    this.perPage = response.data.pg_length;
+
+                    this.page = response.data.pg_number;
+
+                    let i=0;
+                    for(i=0; i<response.data.total_pg;i++){
+                    this.pages[i]=i+1;}
+                    })
+                    .catch(error => {
+                    //dispatch('notification/error', error, { root: true });
+                    console.log(error);
+                    });
+
     },
-
-    refreshList() {
-      this.retrieveCompanies();
-      this.currentCompanies = null;
-      this.currentIndex = -1;
-    },
-
-    setActiveCompanies(companys, index) {
-      this.currentCompanies = companys;
-      this.currentIndex = companys ? index : -1;
-    },
-
-    removeAllCompanies() {
-       CompaniesDataService.deleteAll()
-        .then(response => {
-     
-          this.refreshList();
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    
-
-    getCompanyByName(){
-         this.retrieveCompanies();
-         this.pages = [];
-      
-    },
-
-     deleteCompany(id) {
-     
-      CompaniesDataService.delete(id)
-        .then(response => {
-        
-         
-        if (response.data.message = 202){
-        this.retrieveCompanies();
-        console.log()
-        }
-        else{
-        return response.data.message}
-        
-        })
-        .catch(e => {
-          console.log(e);
-        });
-        
-    }
   },
   mounted() {
     this.retrieveCompanies();
@@ -191,20 +155,20 @@ export default {
         </tr>
     </thead>
     <tbody>
-        <tr v-for="(Company, index) in Companies" :key="index">
+        <tr v-for="item in list_items" :key="item.id">
     
            
-            <td>{{ Company.id }}</td>
-            <td>{{ Company.name }}</td>
-            <td>{{ Company.slug }}</td>
-            <td>{{ Company.inn }}</td>
-            <td>{{ Company.kpp }}</td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.slug }}</td>
+            <td>{{ item.inn }}</td>
+            <td>{{ item.kpp }}</td>
            
             
             <td>
                 <div class="hstack gap-3 flex-wrap">
-                   <router-link :to="{name: 'CompaniesEdit', params: { id: Company.id }}"> <a href="javascript:void(0);" class="link-primary fs-15"><i class="ri-edit-2-line"></i></a></router-link>
-                    <a href="javascript:void(0);" class="link-success fs-15"><i class="ri-delete-bin-line" @click="deleteCompany(Company.id)"></i></a>
+                   <router-link :to="{name: 'CompaniesEdit', params: { id: item.id }}"> <a href="javascript:void(0);" class="link-primary fs-15"><i class="ri-edit-2-line"></i></a></router-link>
+                    <a href="javascript:void(0);" class="link-success fs-15"><i class="ri-delete-bin-line" @click="deleteCompany(item.id)"></i></a>
                 </div>
             </td>
         </tr>
