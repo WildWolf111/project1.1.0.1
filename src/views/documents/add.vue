@@ -15,6 +15,7 @@ import Warehouse_cellDataService from "/src/services/Warehouse_cellDataService";
 import WarehouseDataService from "/src/services/WarehouseDataService";
 import GTDDataService from "/src/services/GTDDataService";
 
+
 export default {
   jsonpage: {
     title: "Basic Elements",
@@ -33,7 +34,8 @@ export default {
       
     Id:0,
     Document_type:{
-      id:2
+      id:'',
+      text:''
     },
     CompanySender:{
           Id:'',
@@ -90,6 +92,15 @@ export default {
           id:'',
         },       
         }],
+
+
+        Document_type:[
+          {
+            id:-1,
+            text:""
+          }
+        ],
+
   Companies:[
           {
             id:-1,
@@ -316,6 +327,42 @@ export default {
 
 
 
+    retrieveDocType(){
+      this.jsonPages = {
+               pg_number:1,
+                  pg_length: 1000
+            };
+         
+            if (this.search!=""){
+            this.jsonFields = [{
+                field:"name",
+                value: this.search
+            }];
+            }else{
+                this.jsonFields = [];
+            }
+
+
+
+            DocumentsDataService.DocType_list(this.jsonFields,[],this.jsonPages)
+        .then(response => {
+
+         let i=0;
+          for(i=0; i<response.data.total_rec;i++){
+               let currentType = response.data.List[i];
+                this.Products[i]={
+        
+                id:currentType.Id,
+                text:currentType.Name  
+
+              };
+ }
+          //this.Brands = response.data.Brands;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },//конец блока (end)
 
 //получение компаний
 retrieveCompanies() {

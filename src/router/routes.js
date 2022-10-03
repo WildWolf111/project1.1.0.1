@@ -1286,7 +1286,7 @@ export default [{
 
     //INCOMEА
     {
-        path: "/documents/edit/:id",
+        path: "/documents/:id",
         name: "DocumentsEdit",
         meta: { title: "Progress", authRequired: true },
         component: () =>

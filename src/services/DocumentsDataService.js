@@ -62,6 +62,12 @@ class DocumentsDataService {
         return axios.put(`/api/v2/data/documents/unhold/${id}`, config);
 
     }
+    DocType_list(params) {
+        let config = {
+            headers: authHeader()
+        }
+        return axios.post(`/api/v2/data/documents/listtypes`, params, config);
+    }
 }
 
 export default new DocumentsDataService();

@@ -113,6 +113,10 @@ export default {
                     });
 
     },
+    edit(id){
+                router.push('/'+this.main_type+'/'+id);
+
+            },
   },
   mounted() {
     this.retrieveCompanies();

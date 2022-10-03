@@ -42,7 +42,7 @@
 
                 search:"",
                 type_list:'warehouseCells/list',
-                 main_type:'warehouseCells',
+                main_type:'warehouse_cell',
                 list_items:[],
                 title: "Warehouse cells",
                 items: [
@@ -108,6 +108,10 @@
                     });
 
     },
+    edit(id){
+                router.push('/'+this.main_type+'/'+id);
+                    console.log(router.push('/'+this.main_type+'/'+id))
+            },
         },
         mounted() {
             this.retrieveWarehousesCells();
