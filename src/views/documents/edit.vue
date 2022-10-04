@@ -215,7 +215,7 @@ export default {
 
 
 
-            ProductsDataService.getAll(this.jsonFields,[],this.jsonPages)
+            ProductsDataService.getAll(this.jsonPages)
         .then(response => {
 
          let i=0;

@@ -4,20 +4,16 @@ import { authHeader } from '../helpers/authservice/auth-header';
 
 class CountryDataService {
 
-    getAll(fields, sorts, pages) {
+    getAll(params) {
 
-        let dataVals = {
-            fields,
-            pages
-        };
+
 
 
         let config = {
             headers: authHeader(),
 
         }
-        console.log(dataVals)
-        return axios.post('/api/v2/data/countries/list', dataVals, config)
+        return axios.post('/api/v2/data/countries/list', params, config)
     }
 
     get(id) {

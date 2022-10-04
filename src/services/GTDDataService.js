@@ -42,13 +42,18 @@ class GTDDataService {
         }
 
         return axios.put(`/api/v2/data/gtd/${id}`, data, config);
+
     }
 
     delete(id, data) {
         let config = {
             headers: authHeader()
         }
-        return axios.delete(`/api/v2/data/GTD/${id}`, data, config);
+
+        console.log("--------------")
+        console.log(data)
+        console.log("--------------")
+        return axios.delete(`/api/v2/data/gtd/${id}`, data, config);
     }
 
     deleteAll() {

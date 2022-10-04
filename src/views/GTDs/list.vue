@@ -8,6 +8,7 @@
 
     import UniversalDataService from "../../services/UniversalDataService";
     import router from "../../router";
+import GTDDataService from "../../services/GTDDataService";
 
     export default {
         page: {
@@ -114,7 +115,19 @@
                 router.push('/'+this.main_type+'/'+id);
 
             },
-   
+            remove(id){
+                
+                GTDDataService.delete(id)
+                    .then(() => {
+                        //dispatch('notification/success', 'Удаление прошло успешно', { root: true });
+                        this.list();
+                    })
+                    .catch(error => {
+                        //dispatch('notification/error', error, { root: true });
+                        console.log(error);
+                    });
+
+            },
   },
 
         mounted() {
@@ -167,6 +180,37 @@
 
                                 </table>
                                 <!-- end table -->
+                                <div class="pagination-wrap hstack gap-2">
+              <a
+                class="page-item pagination-prev disabled"
+                href="#"
+                v-if="page != 1"
+                @click="setPage((--page))"
+              >
+                Previous
+              </a>
+              <ul class="pagination listjs-pagination mb-0">
+                <li
+                 :class="{
+                              active: pageNumber == page,
+                              disabled: pageNumber == '...',
+                            }"
+                  v-for="(pageNumber, index) in pages.slice(page - 1, page + 5)"
+                  :key="index"
+                  @click="setPage(page = pageNumber)"
+                >
+                  <a class="page" href="#"  @click="setPage(pageNumber)">{{ pageNumber }}</a>
+                </li>
+              </ul>
+              <a
+                class="page-item pagination-next"
+                href="#"
+                @click="setPage(++page)"
+                v-if="page < pages.length"
+              >
+                Next
+              </a>
+            </div>
                             </div>
                             <!-- end table responsive -->
                         </div>

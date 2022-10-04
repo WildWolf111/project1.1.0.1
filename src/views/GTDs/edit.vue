@@ -14,27 +14,46 @@ export default {
   },
   data() {
    return {
-      currentGTD:{
+    PageRequest: {
+                        Fields: [{
+                        Name :'',
+                        Value:'',
+                        Operation:'',
+                        Order:'',
+                        }],
+                        PageNumber:0,
+                        PageLenght:0,
+                        TotalRecords:0,
+                        TotalPage:0,
+                    },
+                page: 1,
+                perPage: 7,
+                pages: [],
+                jsonPages: {
+                            PageNumber: 0,
+                            TotalRecords:0,
+                },
+                jsonFields: [{
+                            name:'',
+                            value: ''
+                }],
+
+                search:"",
+
+
+      GTD:{
           id:-1,
           NumId:"",
          Country:{
-            Id:-1,
-            Name:""
+            id:-1,
+            name:""
          },
       },
       message: '',
-        Countries:[
-          {
-            id:-1,
-            text:""
-          }
-        ],
-        selectCountry:
-          {
-            id:-1,
-            text:""
-          }
-        ,
+      Countries:[{
+        id:-1,
+        name:""
+      }]
     };
     
   },
@@ -51,7 +70,7 @@ export default {
          
             console.log(response.data)
             if (response.status == 200){
-              this.currentGTD = response.data;
+              this.GTD = response.data;
             }else{
               this.$router.push({path: "/GTDs"});
               
@@ -65,8 +84,8 @@ export default {
 
     updateGTD() {
         
-        this.currentGTD.Country.Id = parseInt(this.currentGTD.Country.Id);
-       GTDDataService.update(this.currentGTD.id, this.currentGTD)
+        this.GTD.Country.Id = parseInt(this.GTD.Country.Id);
+       GTDDataService.update(this.GTD.id, this.GTD)
        
         .then(response => {
          
@@ -85,7 +104,7 @@ export default {
 
     deleteGTD() {
       
-      GTDDataService.delete(this.currentGTD.Id)
+      GTDDataService.delete(this.GTD.Id)
         .then(response => {
          
           this.$router.push({ name: "GTD" });
@@ -118,35 +137,30 @@ export default {
             }
 
 
-       CountryDataService.getAll(this.jsonFields,[],this.jsonPages)
-        .then(response => {
-          console.log(response.data);
-          for(let i = 0; i < response.data.List.length; i++){
-            console.log("<<<<<<<<<<>>>>>>>>>>>>")
-            console.log(response.data.List)
-              let currentCountry = response.data.List[i];
-            if (currentCountry.Id == this.currentGTD.Country.Id){
-                this.selectCountry.id = currentCountry.id;
-                this.selectCountry.text = currentCountry.name;
-            }
-              this.Countries[i]={
-                id:currentCountry.id, 
-                text:currentCountry.name
-              };
-              
-          }
-          //this.Countries = response.data.Countries;
-        
+       CountryDataService.getAll(this.jsonPages)
+       .then(response => {
+     
          
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-     mySelectEvent({id, text}){
-            this.currentGTD.Country.Id = id;
-            this.currentGTD.Country.Name = text;
-     }
+     let i=0;
+      for(i=0; i<response.data.pg_length;i++){
+           let currentCountry = response.data.List[i];
+          
+           this.Countries[i]={
+    
+            id:currentCountry.id,
+            text:currentCountry.name  
+
+          };
+      }
+
+
+     
+    })
+    .catch(e => {
+      console.log(e);
+    });
+},
+
   },
   mounted() {
     this.message = '';
@@ -168,7 +182,7 @@ export default {
      <div class="row">
           <div>
               <label for="labelInput" class="form-label">{{ $t("t-name") }}</label>
-             <input type="text" class="form-control" id="labelInput" required  v-model.number="currentGTD.num_id" >
+             <input type="text" class="form-control" id="labelInput" required  v-model.number="GTD.num_id" >
           </div>                     
      </div> 
 
@@ -176,7 +190,7 @@ export default {
 
 <div class="col-xxl-3 col-md-6">
     <label for="exampleDataList" class="form-label">{{ $t("t-countries") }}</label>
-    <Select2 v-model.number="currentGTD.Country.id" :options="this.Countries" @select="mySelectEvent($event)"/>
+    <Select2 v-model.number="GTD.Country.id" :options="this.Countries" @select="mySelectEvent($event)"/>
 </div>
 
       
