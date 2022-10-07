@@ -38,11 +38,11 @@ class CountryDataService {
         return axios.put(`/api/v2/data/countries/${id}`, data, config);
     }
 
-    delete(id, data) {
+    delete(id) {
         let config = {
             headers: authHeader()
         }
-        return axios.post(`/api/v2/data/country/delete/${id}`, data, config);
+        return axios.delete(`/api/v2/data/countries/${id}`, config);
     }
 
     deleteAll() {

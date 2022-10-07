@@ -43,11 +43,11 @@ class Warehouse_cellDataService {
         return axios.put(`/api/v2/data/warehouseCells/${id}`, data, config);
     }
 
-    delete(id, data) {
+    delete(id) {
         let config = {
             headers: authHeader()
         }
-        return axios.delete(`/api/v2/data/warehouseCells/${id}`, data, config);
+        return axios.delete(`/api/v2/data/warehouseCells/${id}`, config);
     }
 
     deleteAll() {

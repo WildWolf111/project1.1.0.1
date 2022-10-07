@@ -3,6 +3,7 @@ import Layout from "../../layouts/main.vue";
 import PageHeader from "@/components/page-header";
 import appConfig from "../../../app.config";
 import UniversalDataService from "/src/services/UniversalDataService";
+import CategoriesDataService from "../../services/CategoriesDataService";
 
 export default {
   
@@ -116,6 +117,19 @@ export default {
     },
     edit(id){
                 router.push('/'+this.main_type+'/'+id);
+
+            },
+            remove(id){
+                
+                CategoriesDataService.delete(id)
+                    .then(() => {
+                        //dispatch('notification/success', 'Удаление прошло успешно', { root: true });
+                        this.retrieveCategories();
+                    })
+                    .catch(error => {
+                        //dispatch('notification/error', error, { root: true });
+                        console.log(error);
+                    });
 
             },
   },

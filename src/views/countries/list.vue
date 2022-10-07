@@ -8,6 +8,7 @@
 
     import UniversalDataService from "../../services/UniversalDataService";
     import router from "../../router";
+import CountryDataService from "../../services/CountryDataService";
 
     export default {
         page: {
@@ -84,8 +85,21 @@
 
     },
 
-    edit(id){
-                router.push('/'+this.main_type+'/'+id);
+            edit(id){
+                        router.push('/'+this.main_type+'/'+id);
+
+                    },
+            remove(id){
+                
+                CountryDataService.delete(id)
+                    .then(() => {
+                        //dispatch('notification/success', 'Удаление прошло успешно', { root: true });
+                        this.retrieveCountries();
+                    })
+                    .catch(error => {
+                        //dispatch('notification/error', error, { root: true });
+                        console.log(error);
+                    });
 
             },
   },

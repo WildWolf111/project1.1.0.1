@@ -36,8 +36,10 @@ class DocumentsDataService {
     }
 
     delete(id) {
-
-        return axios.delete(`/api/v2/data/documents/${id}`);
+        let config = {
+            headers: authHeader()
+        }
+        return axios.delete(`/api/v2/data/documents/${id}`, config);
     }
 
     deleteAll() {

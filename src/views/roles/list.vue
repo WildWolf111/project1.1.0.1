@@ -133,8 +133,20 @@
             edit(id){
                 router.push('/'+this.main_type + '/'+id);
 
-            }
+            },
+            remove(id){
+                
+                RolesDataServise.delete(id)
+                    .then(() => {
+                        //dispatch('notification/success', 'Удаление прошло успешно', { root: true });
+                        this.retrieveRoles();
+                    })
+                    .catch(error => {
+                        //dispatch('notification/error', error, { root: true });
+                        console.log(error);
+                    });
 
+            },
         },
 
         mounted() {

@@ -118,6 +118,19 @@ export default {
                 router.push('/'+this.main_type+'/'+id);
 
             },
+            remove(id){
+              UniversalDataService.setPath(this.main_type)
+              UniversalDataService.delete(id)
+                    .then(() => {
+                        //dispatch('notification/success', 'Удаление прошло успешно', { root: true });
+                        this.retrieveBrands();
+                    })
+                    .catch(error => {
+                        //dispatch('notification/error', error, { root: true });
+                        console.log(error);
+                    });
+
+            },
         },
   mounted() {
     this.retrieveBrands();
@@ -170,7 +183,7 @@ export default {
             <td>
                 <div class="hstack gap-3 flex-wrap">
                    <router-link :to="{name: 'BrandEdit', params: { id: item.Id }}"> <a href="javascript:void(0);" class="link-primary fs-15"><i class="ri-edit-2-line"></i></a></router-link>
-                    <a href="javascript:void(0);" class="link-success fs-15"><i class="ri-delete-bin-line" @click="deleteBrand(item.Id)"></i></a>
+                    <a href="javascript:void(0);" class="link-success fs-15"><i class="ri-delete-bin-line" @click="remove(item.Id)"></i></a>
                 </div>
             </td>
         </tr>

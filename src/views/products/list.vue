@@ -114,7 +114,19 @@ export default {
                 router.push('/'+this.main_type+'/'+id);
 
             },
-   
+            remove(id){
+                
+                ProductsDataService.delete(id)
+                    .then(() => {
+                        //dispatch('notification/success', 'Удаление прошло успешно', { root: true });
+                        this.retrieveProducts();
+                    })
+                    .catch(error => {
+                        //dispatch('notification/error', error, { root: true });
+                        console.log(error);
+                    });
+
+            },
   },
   mounted() {
     this.retrieveProducts();
@@ -172,7 +184,7 @@ export default {
             <td>
                 <div class="hstack gap-3 flex-wrap">
                     <router-link :to="{name: 'ProductEdit', params: { id: item.id }}"> <a href="javascript:void(0);" class="link-primary fs-15"><i class="ri-edit-2-line"></i></a></router-link>
-                    <a href="javascript:void(0);" class="link-success fs-15"><i class="ri-delete-bin-line" @click="deleteProduct(item.id)"></i></a>
+                    <a href="javascript:void(0);" class="link-success fs-15"><i class="ri-delete-bin-line" @click="remove(item.id)"></i></a>
                 </div>
             </td>
         </tr>

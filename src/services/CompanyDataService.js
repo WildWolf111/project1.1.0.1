@@ -1,3 +1,4 @@
+import { config } from '@fullcalendar/core';
 import axios from 'axios'
 
 
@@ -20,7 +21,10 @@ class ComopanyDataService {
     }
 
     delete(id) {
-        return axios.delete(`/api/v1/companies/${id}`);
+        let config = {
+            headers: authHeader()
+        }
+        return axios.delete(`/api/v1/companies/${id}`, config);
     }
 
     deleteAll() {

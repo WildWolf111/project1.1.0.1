@@ -8,6 +8,7 @@
 
     import UniversalDataService from "../../services/UniversalDataService";
     import router from "../../router";
+import WarehouseDataService from "../../services/WarehouseDataService";
 
     export default {
         page: {
@@ -29,7 +30,7 @@
                         TotalPage:0,
                     },
                 page: 1,
-                perPage: 7,
+                perPage: 100,
                 pages: [],
                 jsonPages: {
                             PageNumber: 0,
@@ -112,10 +113,24 @@
                 router.push('/'+this.main_type+'/'+id);
 
             },
+            remove(id){
+                
+                WarehouseDataService.delete(id)
+                    .then(() => {
+                        //dispatch('notification/success', 'Удаление прошло успешно', { root: true });
+                        this.retrieveWarehouses();
+                    })
+                    .catch(error => {
+                        //dispatch('notification/error', error, { root: true });
+                        console.log(error);
+                    });
+
+            },
         },
         mounted() {
             this.retrieveWarehouses();
         },
+
     };
 </script>
 

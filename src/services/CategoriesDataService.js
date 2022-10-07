@@ -42,11 +42,11 @@ class CategoriesDataService {
         return axios.post(`/api/v2/data/categories/update/${id}`, data, config);
     }
 
-    delete(id, data) {
+    delete(id) {
         let config = {
             headers: authHeader()
         }
-        return axios.post(`/api/v2/data/categories/delete/${id}`, data, config);
+        return axios.delete(`/api/v2/data/categories/delete/${id}`, config);
     }
 
     deleteAll() {

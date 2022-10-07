@@ -117,6 +117,19 @@ export default {
                 router.push('/'+this.main_type+'/'+id);
 
             },
+            remove(id){
+                
+                CompaniesDataService.delete(id)
+                    .then(() => {
+                        //dispatch('notification/success', 'Удаление прошло успешно', { root: true });
+                        this.retrieveCompanies();
+                    })
+                    .catch(error => {
+                        //dispatch('notification/error', error, { root: true });
+                        console.log(error);
+                    });
+
+            },
   },
   mounted() {
     this.retrieveCompanies();

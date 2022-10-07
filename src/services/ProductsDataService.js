@@ -40,7 +40,7 @@ class ProductsDataService {
         let config = {
             headers: authHeader()
         }
-        return axios.post(`/api/v2/data/product/delete/${id}`, [0], config);
+        return axios.delete(`/api/v2/data/products/${id}`, config);
     }
 
     deleteAll() {

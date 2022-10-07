@@ -120,7 +120,7 @@ import GTDDataService from "../../services/GTDDataService";
                 GTDDataService.delete(id)
                     .then(() => {
                         //dispatch('notification/success', 'Удаление прошло успешно', { root: true });
-                        this.list();
+                        this.retrieveGTDs();
                     })
                     .catch(error => {
                         //dispatch('notification/error', error, { root: true });

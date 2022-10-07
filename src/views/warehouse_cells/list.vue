@@ -8,6 +8,7 @@
 
     import UniversalDataService from "../../services/UniversalDataService";
     import router from "../../router";
+import Warehouse_cellDataService from "../../services/Warehouse_cellDataService";
 
     export default {
         page: {
@@ -108,9 +109,22 @@
                     });
 
     },
-    edit(id){
+            edit(id){
                 router.push('/'+this.main_type+'/'+id);
                     console.log(router.push('/'+this.main_type+'/'+id))
+            },
+            remove(id){
+                
+                Warehouse_cellDataService.delete(id)
+                    .then(() => {
+                        //dispatch('notification/success', 'Удаление прошло успешно', { root: true });
+                        this.retrieveWarehousesCells();
+                    })
+                    .catch(error => {
+                        //dispatch('notification/error', error, { root: true });
+                        console.log(error);
+                    });
+
             },
         },
         mounted() {

@@ -42,11 +42,11 @@ class BrandDataService {
         return axios.post(`/api/v2/brands/update/${id}`, data, config);
     }
 
-    delete(id, data) {
+    delete(id) {
         let config = {
             headers: authHeader()
         }
-        return axios.post(`/api/v2/brand/delete/${id}`, data, config);
+        return axios.delete(`/api/v2/data/brand/${id}`, config);
     }
 
     deleteAll() {

@@ -58,7 +58,7 @@ class RolesDataServices {
         let config = {
             headers: authHeader(),
         }
-        return axios.delete(this.mpath + '/' + id, config)
+        return axios.delete(config)
     }
 
     get(id) {

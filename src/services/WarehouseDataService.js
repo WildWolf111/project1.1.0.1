@@ -39,11 +39,12 @@ class WarehouseDataService {
         return axios.put(`/api/v2/data/warehouses/${id}`, data, config);
     }
 
-    delete(id, data) {
+    delete(id) {
         let config = {
             headers: authHeader()
         }
-        return axios.delete(`/api/v2/data/warehouses/${id}`, data, config);
+
+        return axios.delete(`/api/v2/data/warehouses/${id}`, config);
     }
 
 
