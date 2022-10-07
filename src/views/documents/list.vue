@@ -1,3 +1,10 @@
+<style>
+   .filter{
+    margin: 10px   
+   }
+
+    </style>
+
 <script>
     import Layout from "../../layouts/main.vue";
     import PageHeader from "@/components/page-header";
@@ -198,11 +205,30 @@
     <div class="col-lg-6">
          <div class="input-group">
                 <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" id="search" v-model="search">
-                <button class="btn btn-outline-success" type="button" id="button-addon2" @click="getDocumentByName" key="enter">search</button>
-        
-         </div>
+                <button class="btn btn-outline-success" type="button" id="button-addon2" @click="getDocumentByName" key="enter">search</button>   
+        </div>
     </div>
+       
 </div>
+            <!--++++++++++-->
+            <div class="filter">
+            <b-button-group>
+            <b-dropdown size="lg" variant="primary" text="Large button" >
+            <b-dropdown-item href="#">Action</b-dropdown-item>
+            <b-dropdown-item href="#">Another action</b-dropdown-item>
+            <b-dropdown-item href="#">Something else here</b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item href="#">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="formCheck2" checked>                                                            
+                    <label class="form-check-label" for="formCheck2">
+                    Checked checkbox
+                    </label>
+                </div>
+            </b-dropdown-item>
+            </b-dropdown>
+            </b-button-group>
+            </div>
 <p></p>
   
      <table class="table table-primary table-striped align-middle table-nowrap mb-0">

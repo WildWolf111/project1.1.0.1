@@ -155,6 +155,15 @@ export default {
         
          </div>
     </div>
+    <b-button-group>
+<b-dropdown size="sm" variant="primary" text="Small button" >
+<b-dropdown-item href="#">Action</b-dropdown-item>
+<b-dropdown-item href="#">Another action</b-dropdown-item>
+<b-dropdown-item href="#">Something else here</b-dropdown-item>
+<b-dropdown-divider></b-dropdown-divider>
+<b-dropdown-item href="#">Separated link</b-dropdown-item>
+</b-dropdown>
+</b-button-group>
 </div>
 <p></p>
   
