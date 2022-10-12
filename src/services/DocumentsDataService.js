@@ -50,18 +50,19 @@ class DocumentsDataService {
         return axios.post(`/api/v2/data/documents?name=${name}`, config);
     }
 
-    holddocument(id) {
+    holddocument(id, data) {
         let config = {
             headers: authHeader(),
         }
-        return axios.put(`/api/v2/data/documents/hold/${id}`, config);
+        return axios.put(`/api/v2/data/documents/hold/${id}`, data, config);
 
     }
-    unholddocument(id) {
+    unholddocument(id, data) {
         let config = {
             headers: authHeader(),
         }
-        return axios.put(`/api/v2/data/documents/unhold/${id}`, config);
+        console.log(config)
+        return axios.put(`/api/v2/data/documents/unhold/${id}`, data, config);
 
     }
     DocType_list(params) {

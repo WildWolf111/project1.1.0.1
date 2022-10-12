@@ -196,7 +196,7 @@ export default {
             aria-expanded="false"
             aria-controls="sidebarWarehouse"
           >
-             <PackageIcon></PackageIcon>
+          <i class=" ri-home-line"></i> 
             <span data-key="t-warehouses"> {{ $t("t-warehouses") }}</span>
           </a>
           <div class="collapse menu-dropdown" id="sidebarWarehouse">
@@ -241,6 +241,7 @@ export default {
                     aria-expanded="false"
                     aria-controls="sidebarWarehouse_cell"
                   >
+                  <i class=" ri-fridge-line"></i> 
                <span data-key="t-brand"> {{ $t("t-Warehouses_cells") }}</span>
                   </a>
                   <div class="collapse menu-dropdown" id="sidebarWarehouse_cell">
@@ -402,7 +403,7 @@ export default {
                             class="nav-link custom-abc"
                             data-key="t-analytics"
                           >
-                            {{ $t("t-add") }}
+                          {{ $t("t-add") }}
                           </router-link>
                         </li>
 
@@ -445,7 +446,7 @@ export default {
                             class="nav-link custom-abc"
                             data-key="t-analytics"
                           >
-                            {{ $t("t-add") }}
+                          {{ $t("t-add") }}
                           </router-link>
                         </li>
 
@@ -535,7 +536,7 @@ export default {
             aria-expanded="false"
             aria-controls="sidebarGTDs"
           >
-            <i class="ri-earth-fill"></i>
+            <i class="ri-bill-line"></i>
             <span data-key="t-countries"> {{ $t("t-GTDs") }}</span>
           </a>
           <div class="collapse menu-dropdown" id="sidebarGTDs">
@@ -579,7 +580,7 @@ export default {
             aria-expanded="false"
             aria-controls="sidebarRoles"
           >
-            <i class="ri-earth-fill"></i>
+            <i class="ri-creative-commons-by-line"></i>
             <span data-key="t-countries"> {{ $t("t-Roles") }}</span>
           </a>
           <div class="collapse menu-dropdown" id="sidebarRoles">

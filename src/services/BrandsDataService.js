@@ -4,20 +4,16 @@ import { authHeader } from '../helpers/authservice/auth-header';
 
 class BrandDataService {
 
-    getAll(fields, sorts, pages) {
-
-        let dataVals = {
-            fields,
-            pages
-        };
-
+    getAll(params) {
+        console.log("****************")
+        console.log(params)
 
         let config = {
             headers: authHeader(),
 
         }
-        console.log(dataVals)
-        return axios.post('/api/v2/brands/get', pages, config)
+        console.log(config)
+        return axios.post('/api/v2/data/brands/list', params, config)
     }
 
     get(id) {

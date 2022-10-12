@@ -177,8 +177,8 @@ export default {
             <td>{{ item.name }}</td>
             <td>{{ item.slug }}</td>
             <td>{{ item.Brand.name}}</td>
-            <td>{{ item.SKU}}</td>
-            <td>{{ item.short_description}}</td>
+            <td>{{ item.sku}}</td>
+            <td>{{ item.short_desc}}</td>
            
             
             <td>

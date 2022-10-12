@@ -223,8 +223,8 @@ export default {
                let currentProduct = response.data.List[i];
                 this.Products[i]={
         
-                id:currentProduct.Id,
-                text:currentProduct.Name  
+                id:currentProduct.id,
+                text:currentProduct.name  
 
               };
  }

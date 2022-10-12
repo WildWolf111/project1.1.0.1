@@ -132,7 +132,7 @@
              if (response.data.status_code == 200){
                this.list();
              }
-       
+            console.log(response.data)
       
         })
         
@@ -224,7 +224,7 @@
                     <label class="form-check-label" for="formCheck2">
                     Checked checkbox
                     </label>
-                </div>
+                                    </div>
             </b-dropdown-item>
             </b-dropdown>
             </b-button-group>

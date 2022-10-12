@@ -23,6 +23,7 @@ export default {
           full_description:"",
           Brand:{
             Id:-1,
+            name:""
           },
       },
       message: '',
@@ -32,12 +33,6 @@ export default {
             text:""
           }
         ],
-        selectBrand:
-          {
-            id:-1,
-            text:""
-          }
-        ,
     };
     
   },
@@ -52,7 +47,7 @@ export default {
        ProductsDataService.get(id)
         .then(response => {
          
-            console.log(response.data)
+            console.log(response)
             if (response.status == 200){
               this.currentProduct = response.data;
             }else{
@@ -69,17 +64,17 @@ export default {
     updateProduct() {
         
         this.currentProduct.Brand.Id = parseInt(this.currentProduct.Brand.Id);
-       ProductsDataService.update(this.currentProduct.Id, this.currentProduct)
+       ProductsDataService.update(this.currentProduct.id, this.currentProduct)
        
         .then(response => {
-         
+
           this.message = 'The Product was updated successfully!';
-        if (response.data.status_code == 200){
+        if (response.status == 200){
         this.$router.push({path: "/products"})}
         else{
         return response.data.message}
         })
-        
+
         .catch(e => {
           console.log(e);
         });
@@ -121,35 +116,33 @@ export default {
             }
 
 
-       BrandsDataService.getAll(this.jsonFields,[],this.jsonPages)
-        .then(response => {
-          console.log(response.data);
-          for(let i = 0; i < response.data.List.length; i++){
-            console.log("<<<<<<<<<<>>>>>>>>>>>>")
-            console.log(response.data.List.length)
-              let currentBrand = response.data.List[i];
-            if (currentBrand.Id == this.currentProduct.Brand.Id){
-                this.selectBrand.id = currentBrand.Id;
-                this.selectBrand.text = currentBrand.Name;
-            }
-              this.Brands[i]={
-                id:currentBrand.Id, 
-                text:currentBrand.Name
-              };
-              
-          }
-          //this.Brands = response.data.Brands;
-        
-         
-        })
+       BrandsDataService.getAll(this.jsonPages)
+       .then(response => {
+                
+                this.perPage = response.data.pg_length;
+                  
+                  this.page = response.data.pg_number;
+           
+
+                for(let i = 0; i < response.data.List.length; i++){
+
+                  let currentBrand = response.data.List[i];
+                
+                  this.Brands[i]={
+                    
+                    id:currentBrand.Id,
+
+                    text:currentBrand.name 
+
+                  };
+
+      }
+      })
         .catch(e => {
           console.log(e);
         });
     },
-     mySelectEvent({id, text}){
-            this.currentProduct.Brand.Id = id;
-            this.currentProduct.Brand.Name = text;
-     }
+
   },
   mounted() {
     this.message = '';
@@ -171,39 +164,39 @@ export default {
      <div class="row">
           <div>
               <label for="labelInput" class="form-label">{{ $t("t-name") }}</label>
-             <input type="text" class="form-control" id="labelInput" required  v-model="currentProduct.Name" >
+             <input type="text" class="form-control" id="labelInput" required  v-model="currentProduct.name" >
           </div>                     
      </div> 
 
       <div class="row">
           <div>
               <label for="labelInput" class="form-label">   {{ $t("t-slug") }}</label>
-              <input type="text" class="form-control" id="labelInput" required v-model="currentProduct.Slug" >
+              <input type="text" class="form-control" id="labelInput" required v-model="currentProduct.slug" >
           </div>                     
      </div>
         <div class="row">
           <div>
               <label for="labelInput" class="form-label">   {{ $t("t-SKU") }}</label>
-              <input type="Text" class="form-control" id="labelInput" required v-model="currentProduct.SKU" >
+              <input type="Text" class="form-control" id="labelInput" required v-model="currentProduct.sku" >
           </div>                     
      </div>
            <div class="row">
           <div>
               <label for="labelInput" class="form-label"> {{ $t("t-short_description") }}</label>
-             <input type="Text" class="form-control" id="labelInput" required v-model="currentProduct.short_description" >
+             <input type="Text" class="form-control" id="labelInput" required v-model="currentProduct.short_desc" >
           </div>                     
      </div>  
 
  <div class="row">
           <div>
               <label for="labelInput" class="form-label">  {{ $t("t-full_description") }}</label>
-              <input type="Text" class="form-control" id="labelInput" required v-model="currentProduct.full_description" >
+              <input type="Text" class="form-control" id="labelInput" required v-model="currentProduct.full_desc" >
           </div>                     
   </div>
 
 <div class="col-xxl-3 col-md-6">
     <label for="exampleDataList" class="form-label">{{ $t("t-brands") }}</label>
-    <Select2 v-model="currentProduct.Brand.Id" :options="this.Brands" @select="mySelectEvent($event)"/>
+    <Select2 v-model="currentProduct.Brand.Id" :options="this.Brands"/>
 </div>
 
       

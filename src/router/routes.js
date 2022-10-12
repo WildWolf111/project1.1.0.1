@@ -1450,4 +1450,30 @@ export default [{
         component: () =>
             import ("../views/roles/add"),
     },
+
+    //Categories
+    {
+        path: "/categories/:id",
+        name: "CategoriesEdit",
+        meta: { title: "Progress", authRequired: true },
+        component: () =>
+            import ("../views/categories/edit"),
+    },
+    {
+        path: "/categories",
+        name: "Categories List",
+        meta: { title: "Progress", authRequired: true },
+        component: () =>
+            import ("../views/categories/list"),
+
+    },
+    {
+        path: "/categories/add",
+        name: "Categories Add",
+        meta: { title: "Progress", authRequired: true },
+        component: () =>
+            import ("../views/categories/add"),
+    },
+
+
 ];

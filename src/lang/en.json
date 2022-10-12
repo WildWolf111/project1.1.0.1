@@ -199,5 +199,11 @@
     "t-SKU": "SKU",
     "t-short_description": "Short description",
     "t-full_description": "Full description",
-    "t-Added": "Add"
+    "t-Added": "Add",
+
+
+    "t-Warehouses_cells": "Warehouse cells",
+    "t-GTDs": "GTDs",
+    "t-Roles": "Roles"
+
 }

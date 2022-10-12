@@ -18,7 +18,11 @@ class ProductsDataService {
 
 
     get(id) {
-        return axios.post(`/api/v2/data/product/get/${id}`, config);
+        let config = {
+            headers: authHeader()
+        }
+        console.log(id)
+        return axios.get(`/api/v2/data/products/${id}`, config);
     }
 
     create() {
@@ -33,7 +37,7 @@ class ProductsDataService {
         let config = {
             headers: authHeader()
         }
-        return axios.post(`/api/v2/data/product/update/${id}`, data, config);
+        return axios.put(`/api/v2/data/products/${id}`, data, config);
     }
 
     delete(id) {
