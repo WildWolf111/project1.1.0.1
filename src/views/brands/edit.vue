@@ -98,14 +98,14 @@ export default {
      <div class="row">
           <div>
               <label for="labelInput" class="form-label">{{ $t("t-name") }}</label>
-             <input type="Text" class="form-control" id="labelInput" required  v-model="currentBrand.Name" >
+             <input type="Text" class="form-control" id="labelInput" required  v-model="currentBrand.name" >
           </div>                     
      </div> 
 
       <div class="row">
           <div>
               <label for="labelInput" class="form-label">   {{ $t("t-slug") }}</label>
-              <input type="Text" class="form-control" id="labelInput" required v-model="currentBrand.Slug" >
+              <input type="Text" class="form-control" id="labelInput" required v-model="currentBrand.slug" >
           </div>                     
      </div>
 

@@ -2,7 +2,15 @@
    .filter{
     margin: 10px   
    }
-
+   .col-lg-6{
+    display:  inline-block;
+   }
+   .btn-group{
+    display:  inline-block;
+   }
+   .form-check{
+    margin-left:10px ;
+   }
     </style>
 
 <script>
@@ -42,6 +50,11 @@
                 jsonPages: {
                             PageNumber: 0,
                             TotalRecords:0,
+                            Fields:[{
+                                name:'',
+                                value: '',
+                                operation: ''
+                        }],
                 },
                 jsonFields: [{
                             name:'',
@@ -79,11 +92,16 @@
         methods:{
    
             list(){
-
+                this.jsonPages.Fields=[{
+                    name:'CompanySender',
+                    order: false,
+                    operation:'LIKE',
+                    value:''
+                }];       
                 UniversalDataService.setPath(this.type_list);
                 UniversalDataService.list(this.jsonPages)
                     .then(response => {
-
+                        console.log(this.jsonPages)
                         //dispatch('notification/success', 'Получение списка прошло успешно', { root: true });
                         this.list_items = response.data.List;
                         console.log(response)
@@ -185,6 +203,13 @@
             // Вы НЕ должны устанавливать формат даты самостоятельно
             return (new Date(this.creation_date)).toLocaleDateString() 
         },
+
+        sortedCompanyname() {
+    return [...this.item.CompanySender.name].sort((a, b) => a.name.localeCompare(b.name));
+  },
+
+
+
     },
  mounted() {
             this.list();
@@ -209,39 +234,120 @@
         </div>
     </div>
        
-</div>
-            <!--++++++++++-->
-            <div class="filter">
-            <b-button-group>
-            <b-dropdown size="lg" variant="primary" text="Large button" >
-            <b-dropdown-item href="#">Action</b-dropdown-item>
-            <b-dropdown-item href="#">Another action</b-dropdown-item>
-            <b-dropdown-item href="#">Something else here</b-dropdown-item>
-            <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item href="#">
+    <!--filterform-->
+            <div class="btn-group">
+            <button type="button" class="btn btn-first dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-filter-alt"></i></button>
+            <div class="dropdown-menu dropdownmenu-success">
+            
+            
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="formCheck2" checked>                                                            
+                    
+                    <input class="form-check-input" type="checkbox" id="formCheck2" uncheked>                                                            
                     <label class="form-check-label" for="formCheck2">
-                    Checked checkbox
+                        проведен
                     </label>
-                                    </div>
-            </b-dropdown-item>
-            </b-dropdown>
-            </b-button-group>
-            </div>
+                </div>
+                <div class="form-check">
+                    
+                    <input class="form-check-input" type="checkbox" id="formCheck2" uncheked>                                                            
+                    <label class="form-check-label" for="formCheck2">
+                        распроведен
+                    </label>
+                </div>
+                <b-dropdown-divider></b-dropdown-divider>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="formCheck2" uncheked>                                                            
+                    <label class="form-check-label" for="formCheck2">
+                    Приход
+                    </label>
+                </div>
+            
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="formCheck2" uncheked>                                                            
+                    <label class="form-check-label" for="formCheck2">
+                    Расход
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="formCheck2" uncheked>                                                            
+                    <label class="form-check-label" for="formCheck2">
+                    Переоценка
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="formCheck2" uncheked>                                                            
+                    <label class="form-check-label" for="formCheck2">
+                    Офромление заказа
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="formCheck2" uncheked>                                                            
+                    <label class="form-check-label" for="formCheck2">
+                    Передача
+                    </label>
+                </div>
+            
+                <b-dropdown-divider></b-dropdown-divider>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="formCheck2" uncheked>                                                            
+                    <label class="form-check-label" for="formCheck2">
+                    авпвяпа
+                    </label>
+                </div>
+
+            <a class="dropdown-item" href="#"></a>
+        
+        
+        </div>
+            </div><!-- btn-group -->
+             <!--filterform-end-->
+</div>
+
 <p></p>
   
      <table class="table table-primary table-striped align-middle table-nowrap mb-0">
     <thead>
         <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Дата создания</th>
-            <th scope="col">от кого</th>
-            <th scope="col">кому</th>
-            <th scope="col">тип документа</th>
-            <th scope="col">сумма</th>
-            <th scope="col">статус</th>
-            <th scope="col"></th>
+            <th scope="col">Id
+               
+            </th>
+
+
+            <th scope="col">Дата создания
+                <i class="ri-arrow-up-down-line"></i>
+            </th>
+
+
+            <th scope="col">от кого
+                <i class="ri-arrow-up-down-line" @click="sortedCompanyname"></i>
+            </th>
+
+
+            <th scope="col">кому
+                <i class="ri-arrow-up-down-line" @click="sortbyname"></i>
+            </th>
+
+
+            <th scope="col">тип документа
+                <i class="ri-arrow-up-down-line"></i>
+            </th>
+
+
+            <th scope="col">сумма
+                <i class="ri-arrow-up-down-line"></i>
+            </th>
+
+
+            <th scope="col">статус
+                <i class="ri-arrow-up-down-line"></i>
+            </th>
+
+
+            <th scope="col">
+
+            </th>
             
             
         
