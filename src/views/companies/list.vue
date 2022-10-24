@@ -3,7 +3,7 @@ import Layout from "../../layouts/main.vue";
 import PageHeader from "@/components/page-header";
 import appConfig from "../../../app.config";
 import CompaniesDataService from "/src/services/CompaniesDataService";
-
+import UniversalDataService from "/src/services/UniversalDataService";
 export default {
   
   page: {

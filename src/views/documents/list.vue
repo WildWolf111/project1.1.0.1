@@ -13,7 +13,7 @@
    }
     </style>
 
-<script>
+<script >
     import Layout from "../../layouts/main.vue";
     import PageHeader from "@/components/page-header";
     import appConfig from "../../../app.config";
@@ -24,8 +24,15 @@
     import DocumentsDataService from "../../services/DocumentsDataService";
     import UniversalDataService from "../../services/UniversalDataService";
     import router from "../../router";
+    import { reactive, toRefs } from 'vue'
+    import VueSlider from 'vue-slider-component'
+    import 'vue-slider-component/theme/antd.css'
     
     export default {
+        setup() {
+    const data = reactive({ value: 0 })
+    return toRefs(data)
+  },
         page: {
             title: "Documents",
             meta: [{ name: "description", content: appConfig.description }],
@@ -290,16 +297,13 @@
             
                 <b-dropdown-divider></b-dropdown-divider>
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="formCheck2" uncheked>                                                            
-                    <label class="form-check-label" for="formCheck2">
-                    авпвяпа
-                    </label>
-                </div>
-
-            <a class="dropdown-item" href="#"></a>
+                <SliderElement :format="{
+                            prefix: '$',
+                            thousand: ' '
+                        }" :step="1000" :max="100000"  merge="15000"  />
+                                    <a class="dropdown-item" href="#"></a>
         
-        
+            
         </div>
             </div><!-- btn-group -->
              <!--filterform-end-->

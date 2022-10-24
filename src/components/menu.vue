@@ -568,7 +568,48 @@ export default {
             </ul>
           </div>
         </li>
-        
+         <!--companies-->
+         <li class="nav-item">
+          <a
+            class="nav-link menu-link"
+            href="#sidebarCompanies"
+            data-bs-toggle="collapse"
+            role="button"
+            aria-expanded="false"
+            aria-controls="sidebarCompanies"
+          >
+            <i class="ri-building-2-fill"></i>
+            <span data-key="t-companies"> {{ $t("t-companies") }}</span>
+          </a>
+          <div class="collapse menu-dropdown" id="sidebarCompanies">
+            <ul class="nav nav-sm flex-column">
+              
+               <li class="nav-item">
+                <router-link
+                  to="/companies/add"
+                  class="nav-link custom-abc"
+                  data-key="t-analytics"
+                >
+                  {{ $t("t-companies-add") }}
+                </router-link>
+              </li>
+              
+              <li class="nav-item">
+                <router-link
+                  to="/companies"
+                  class="nav-link custom-abc"
+                  data-key="t-analytics"
+                >
+                  {{ $t("t-companies-list") }}
+                </router-link>
+              </li>
+             
+
+
+             
+            </ul>
+          </div>
+        </li>
        
         <!-- Roles-->
         <li class="nav-item">

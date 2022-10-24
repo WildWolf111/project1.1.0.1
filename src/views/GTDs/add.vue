@@ -91,7 +91,7 @@ export default {
       this.submitted = false;
       this.GTD = {};
     },
-    retrieveGTDs(){
+    retrieveCountries(){
       this.jsonPages = {
                pg_number:1,
                   pg_length: 1000
@@ -107,7 +107,7 @@ export default {
             }
 
 
-            CountryDataService.getAll(this.jsonFields,[],this.jsonPages)
+            CountryDataService.getAll(this.jsonPages)
         .then(response => {
         console.log('111111111111111111111111111111')
     console.log(response.data)
@@ -148,7 +148,7 @@ console.log("<<<<<<<<<<<>>>>>>>>>>>>>>>")
      
   },
    mounted() {
-    this.retrieveGTDs();
+    this.retrieveCountries();
   },
     
 };

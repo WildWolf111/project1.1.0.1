@@ -35,7 +35,7 @@ class BrandDataService {
         let config = {
             headers: authHeader()
         }
-        return axios.post(`/api/v2/brands/update/${id}`, data, config);
+        return axios.post(`/api/v2/data/brands/${id}`, data, config);
     }
 
     delete(id) {

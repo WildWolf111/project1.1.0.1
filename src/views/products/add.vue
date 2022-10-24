@@ -146,7 +146,7 @@ export default {
             }
 
 
-            BrandsDataService.getAll(this.jsonFields,[],this.jsonPages)
+            BrandsDataService.getAll(this.jsonPages)
         .then(response => {
         
     
@@ -166,7 +166,7 @@ export default {
                 
                 id:currentBrand.Id,
 
-                text:currentBrand.Name
+                text:currentBrand.name
 
               };
 

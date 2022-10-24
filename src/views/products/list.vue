@@ -30,6 +30,8 @@ export default {
                 page: 1,
                 perPage: 7,
                 pages: [],
+                OrderBy:"order_by",
+	              OrderAsc:  "order",
                 jsonPages: {
                             PageNumber: 0,
                             TotalRecords:0,
@@ -88,13 +90,13 @@ export default {
        }
 
 
-       ProductsDataService.getAll(this.jsonPages)
+       ProductsDataService.getAll(this.jsonFields,this.jsonPages)
        .then(response => {
 
                     //dispatch('notification/success', 'Получение списка прошло успешно', { root: true });
                     this.list_items = response.data.List;
 
-                    console.log(response.data.List)
+                    console.log(response)
 
                     this.perPage = response.data.pg_length;
 

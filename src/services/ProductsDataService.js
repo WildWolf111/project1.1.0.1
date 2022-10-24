@@ -25,12 +25,12 @@ class ProductsDataService {
         return axios.get(`/api/v2/data/products/${id}`, config);
     }
 
-    create() {
+    create(data) {
         let config = {
             headers: authHeader()
         }
         console.log(config)
-        return axios.post("/api/v2/data/products/create", {}, config);
+        return axios.post("/api/v2/data/products/post", data, config);
     }
 
     update(id, data) {

@@ -184,7 +184,10 @@ export default {
           Id:'',
           Name:'',
         },
-        
+        Document_type:{
+          Id:'',
+          Name:'',
+        },
         });
       
     }, //добавление новой строки(конец)
@@ -244,7 +247,8 @@ export default {
       var data = {
       'id':this.Document.Id,
       'DocumentType':{
-        'id':2
+        'id':this.Document_type.Id,
+        'name':this.Document_type.Name
       },
     'CompanySender':{
           'Id':this.Document.CompanySender.Id,
@@ -305,9 +309,10 @@ export default {
 
 
 
-            ProductsDataService.getAll(this.jsonFields,[],this.jsonPages)
+            ProductsDataService.getAll(this.jsonPages)
         .then(response => {
-
+          console.log('----------1111-------------')
+          console.log(response.data.List)
          let i=0;
           for(i=0; i<response.data.total_rec;i++){
                let currentProduct = response.data.List[i];
@@ -545,7 +550,42 @@ retrieveCompanies() {
           console.log(e);
         });
     },
-    
+    retrieveDocType(){
+      this.jsonPages = {
+               pg_number:1,
+                  pg_length: 1000
+            };
+         
+            if (this.search!=""){
+            this.jsonFields = [{
+                field:"name",
+                value: this.search
+            }];
+            }else{
+                this.jsonFields = [];
+            }
+
+
+
+            DocumentsDataService.DocType_list(this.jsonPages)
+        .then(response => {
+
+         let i=0;
+          for(i=0; i<response.data.total_rec;i++){
+               let Document_type = response.data.List[i];
+                this.Document_type[i]={
+        
+                id:Document_type.Id,
+                text:Document_type.Name  
+
+              };
+ }
+          //this.Brands = response.data.Brands;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },//конец блока (end)
   },
 
    mounted() {
@@ -580,7 +620,14 @@ retrieveCompanies() {
                                      <Select2 v-model.number="Document.CompanyRecipient.Id" :options="this.Companies"/>
 
                                 </div>
+                                
+                                
+                                
+                                <div class="col-md-4 position-relative">
+                                    <label for="exampleDataList" class="form-label" >Тип документа</label>
+                                     <Select2 v-model.number="Document.Document_type.Id" :options="this.Documents"/>
 
+                                </div>
 
 
 

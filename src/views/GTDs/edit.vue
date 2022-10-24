@@ -153,7 +153,7 @@ export default {
           };
       }
 
-
+console.log(response.data.List)
      
     })
     .catch(e => {
@@ -188,10 +188,10 @@ export default {
 
   
 
-<div class="col-xxl-3 col-md-6">
-    <label for="exampleDataList" class="form-label">{{ $t("t-countries") }}</label>
-    <Select2 v-model.number="GTD.Country.id" :options="this.Countries" @select="mySelectEvent($event)"/>
-</div>
+                <div class="col-xxl-3 col-md-6">
+                    <label for="exampleDataList" class="form-label">{{ $t("t-countries") }}</label>
+                    <Select2 v-model.number="GTD.Country.id" :options="this.Countries" />
+                </div>
 
       
 <p>
