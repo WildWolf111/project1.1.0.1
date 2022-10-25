@@ -11,6 +11,10 @@
    .form-check{
     margin-left:10px ;
    }
+   .slider {
+    /* overwrite slider styles */
+    width: 200px;
+    }
     </style>
 
 <script >
@@ -24,21 +28,19 @@
     import DocumentsDataService from "../../services/DocumentsDataService";
     import UniversalDataService from "../../services/UniversalDataService";
     import router from "../../router";
-    import { reactive, toRefs } from 'vue'
-    import VueSlider from 'vue-slider-component'
-    import 'vue-slider-component/theme/antd.css'
-    
+
+    import RangeSlider from 'vue-range-slider'
+    // you probably need to import built-in style
+    import 'vue-range-slider/dist/vue-range-slider.css'
     export default {
-        setup() {
-    const data = reactive({ value: 0 })
-    return toRefs(data)
-  },
+
         page: {
             title: "Documents",
             meta: [{ name: "description", content: appConfig.description }],
         },
         data() {
             return {
+                
                 PageRequest: {
                         Fields: [{
                         Name :'',
@@ -86,12 +88,13 @@
                     },
                     
                 ],
-                
+                sliderValue: 50,
             };
         },
         components: {
             Layout,
             PageHeader,
+            RangeSlider
         },
 
 
@@ -294,14 +297,11 @@
                     Передача
                     </label>
                 </div>
-            
+             
                 <b-dropdown-divider></b-dropdown-divider>
-
-                <SliderElement :format="{
-                            prefix: '$',
-                            thousand: ' '
-                        }" :step="1000" :max="100000"  merge="15000"  />
-                                    <a class="dropdown-item" href="#"></a>
+                
+       
+               
         
             
         </div>

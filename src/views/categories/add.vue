@@ -104,6 +104,14 @@ export default {
   <Layout>
     <PageHeader :title="title" :items="items" />
     
+
+    <div class="col-md-4 position-relative">
+                                    <label for="exampleDataList" class="form-label" >Тип документа</label>
+                                     <Select2 v-model.number="Category.Parent_Id" :options="this.Category"/>
+                                </div>
+
+
+
      <div class="row">
           <div>
               <label for="labelInput" class="form-label">{{ $t("t-name") }}</label>

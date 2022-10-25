@@ -4,20 +4,14 @@ import { authHeader } from '../helpers/authservice/auth-header';
 
 class CategoriesDataService {
 
-    getAll(fields, sorts, pages) {
-
-        let dataVals = {
-            fields,
-            pages
-        };
-
+    getAll(params) {
 
         let config = {
             headers: authHeader(),
 
         }
-        console.log(dataVals)
-        return axios.post('/api/v2/data/categories/get', dataVals, config)
+
+        return axios.post('/api/v2/data/categories/list', params, config)
     }
 
     get(id) {

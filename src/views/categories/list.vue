@@ -92,8 +92,8 @@ export default {
            this.jsonFields = [];
        }
 
-       UniversalDataService.setPath(this.type_list)
-       UniversalDataService.list(this.jsonPages)
+       
+       CategoriesDataService.getAll(this.jsonPages)
        .then(response => {
 
                     //dispatch('notification/success', 'Получение списка прошло успешно', { root: true });
