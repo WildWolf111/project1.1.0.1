@@ -18,7 +18,7 @@ class CategoriesDataService {
         let config = {
             headers: authHeader()
         }
-        return axios.post(`/api/v2/data/categories/get/${id}`, config);
+        return axios.get(`/api/v2/data/categories/${id}`, config);
     }
 
     create(data) {
@@ -33,14 +33,14 @@ class CategoriesDataService {
         let config = {
             headers: authHeader()
         }
-        return axios.post(`/api/v2/data/categories/update/${id}`, data, config);
+        return axios.put(`/api/v2/data/categories/${id}`, data, config);
     }
 
     delete(id) {
         let config = {
             headers: authHeader()
         }
-        return axios.delete(`/api/v2/data/categories/delete/${id}`, config);
+        return axios.delete(`/api/v2/data/categories/${id}`, config);
     }
 
     deleteAll() {

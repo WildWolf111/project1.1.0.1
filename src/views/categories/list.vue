@@ -203,8 +203,11 @@ export default {
             
             <td>
                 <div class="hstack gap-3 flex-wrap">
+                  <a href="javascript:void(0);" class="link-warning fs-15"><i class=" ri-arrow-up-line" @click="level_up(item.id)"></i></a>
+                  <a href="javascript:void(0);" class="link-warning fs-15"><i class=" ri-arrow-down-line" @click="level_down(item.id)"></i></a>
                    <router-link :to="{name: 'CategoriesEdit', params: { id: item.id }}"> <a href="javascript:void(0);" class="link-primary fs-15"><i class="ri-edit-2-line"></i></a></router-link>
-                    <a href="javascript:void(0);" class="link-success fs-15"><i class="ri-delete-bin-line" @click="deleteCategory(item.id)"></i></a>
+                    <a href="javascript:void(0);" class="link-danger fs-15"><i class="ri-delete-bin-line" @click="deleteCategory(item.id)"></i></a>
+
                 </div>
             </td>
         </tr>

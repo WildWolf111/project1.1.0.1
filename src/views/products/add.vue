@@ -4,6 +4,7 @@ import PageHeader from "@/components/page-header";
 import appConfig from "../../../app.config";
 import ProductsDataService from "/src/services/ProductsDataService";
 import BrandsDataService from "/src/services/BrandsDataService";
+import CategoriesDataService from "/src/services/CategoriesDataService";
 import Select2 from 'vue3-select2-component';
 
 export default {
@@ -25,9 +26,18 @@ export default {
         Brand:{
           Id:-1,
         },
+        Category:{
+          id:""
+        },
         Sort:0,
         },
         Brands:[
+          {
+            id:-1,
+            text:""
+          }
+        ],
+        Categories:[
           {
             id:-1,
             text:""
@@ -96,6 +106,9 @@ export default {
         "Brand": {
           "Id":parseInt(this.Product.Brand.Id)
           },
+          "Category": {
+          "Id":parseInt(this.Product.Category.Id)
+          },
         "sort":this.Product.Sort,
       };
        
@@ -114,7 +127,7 @@ export default {
                 this.Product.Short_description = ""
                 this.Product.Full_description = ""
                 this.Product.Brand.Id = ""
-             
+                this.Product.Category.Id = ""
 
         }
         else{
@@ -175,7 +188,7 @@ export default {
 
           }
           //this.Brands = response.data.Brands;
-console.log("<<<<<<<<<<<>>>>>>>>>>>>>>>")
+console.log("<<<<<<<<<<<Brands>>>>>>>>>>>>>>>")
 
               console.log(this.Brands)
          
@@ -184,10 +197,74 @@ console.log("<<<<<<<<<<<>>>>>>>>>>>>>>>")
           console.log(e);
         });
     },
+    retrieveCategories() {
+      this.jsonPages = {
+               pg_number:1,
+                  pg_length: 1000
+            };
+         
+            if (this.search!=""){
+            this.jsonFields = [{
+                field:"name",
+                value: this.search
+            }];
+            }else{
+                this.jsonFields = [];
+            }
+
+       
+       CategoriesDataService.getAll(this.jsonPages)
+       .then(response => {
+        
+    
+        console.log(response.data)
+
+       this.perPage = response.data.pg_length;
+       
+       this.page = response.data.pg_number;
+             
+             
+            
+        for(let i = 0; i < response.data.length; i++){
      
+           let Category = response.data[i];
+        
+           this.Categories[i]={
+             
+             id:Category.id,
+
+             text:Category.name
+
+           };
+
+        
+
+
+       }
+
+                   
+
+
+
+                    })
+                    .catch(error => {
+                    //dispatch('notification/error', error, { root: true });
+                    console.log(error);
+                    });
+
+    },
+
+
+
+
+
+
+
+
   },
    mounted() {
     this.retrieveBrands();
+    this.retrieveCategories();
   },
     
 };
@@ -244,7 +321,10 @@ console.log("<<<<<<<<<<<>>>>>>>>>>>>>>>")
     <Select2 v-model.number="Product.Brand.Id" :options="this.Brands" />
 </div>
 
-
+<div class="col-xxl-3 col-md-6">
+    <label for="exampleDataList" class="form-label">{{ $t("t-category") }}</label>
+    <Select2 v-model.number="Product.Category.id" :options="this.Categories" />
+</div>
 
     <p>
  
