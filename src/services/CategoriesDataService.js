@@ -25,7 +25,7 @@ class CategoriesDataService {
         let config = {
             headers: authHeader()
         }
-        console.log(config)
+        console.log(data)
         return axios.post("/api/v2/data/categories/post", data, config);
     }
 

@@ -3,7 +3,7 @@ import Layout from "../../layouts/main.vue";
 import PageHeader from "@/components/page-header";
 import appConfig from "../../../app.config";
 import CategoriesDataService from "/src/services/CategoriesDataService";
-
+import Select2 from 'vue3-select2-component';
 export default {
   
   page: {
@@ -17,8 +17,16 @@ export default {
         Id:'',
         Name:"",
         Slug:"",
-        Parent_id:1,
-        },
+        parent:
+        {id:''
+      },
+    },
+      Categories:[{      
+        id:-1,
+        text:""
+    }]
+
+
 
        
     };
@@ -26,9 +34,62 @@ export default {
   },
   components: {
     Layout,
-    PageHeader,
+    PageHeader, 
+    Select2
   },
     methods: {
+      retrieveCategories() {
+     
+     this.jsonPages = {
+       pg_number:this.page,
+       pg_length: this.perPage
+   };
+
+   if (this.search!=""){
+    this.jsonFields = [{
+       field:"name",
+       value: this.search
+    }];
+    }else{
+        this.jsonFields = [];
+    }
+
+
+    CategoriesDataService.getAll(this.jsonPages)
+    .then(response => {
+        
+    
+        console.log(response.data)
+
+       this.perPage = response.data.pg_length;
+       
+       this.page = response.data.pg_number;
+             
+             
+            
+        for(let i = 0; i < response.data.length; i++){
+     console.log(response)
+           let Category = response.data[i];
+        
+           this.Categories[i]={
+             
+             id:Category.id,
+
+             text:Category.name
+
+           };
+
+        
+
+
+       }
+
+      
+     })
+     .catch(e => {
+       console.log(e);
+     });
+ },
        translit(word){
       var answer = '';
       var converter = {
@@ -65,11 +126,23 @@ export default {
 
       },
 
+
+
+
+
+
+
+
+
+
+ 
     addedCategory() {
       var data = {
         "name":this.Category.Name,
         "slug":this.Category.Slug,
-        "parent_id":this.Category.Parent_id
+        "parent":
+        {"id":this.Category.id
+        }
       };
   
       CategoriesDataService.create(data)
@@ -77,10 +150,11 @@ export default {
           this.Category.Id = response.data.id;
          
           this.submitted = true;
-
+console.log(response.data)
          if (response.data.message = 202){
         this.Category.Name = ""
         this.Category.Slug = ""
+        this.Category.id = ""
         }
         else{
         return response.data.message}
@@ -96,7 +170,11 @@ export default {
       this.Category = {};
     }
   },
- 
+
+  mounted() {
+   this.retrieveCategories()
+
+  },
 };
 </script>
 
@@ -104,11 +182,12 @@ export default {
   <Layout>
     <PageHeader :title="title" :items="items" />
     
-
-    <div class="col-md-4 position-relative">
-                                    <label for="exampleDataList" class="form-label" >Тип документа</label>
-                                     <Select2 v-model.number="Category.Parent_Id" :options="this.Category"/>
-                                </div>
+    <div class="col-xxl-3 col-md-6" :style="{'margin-left':Category.level*25+'px'}">
+      
+        <label for="exampleDataList" class="form-label">{{ $t("t-brands") }}</label>
+        <Select2 v-model.number="Category.id" :options="this.Categories" />
+      
+    </div>
 
 
 
@@ -120,7 +199,7 @@ export default {
      </div> 
 
       <div class="row">
-          <div>
+          <div> 
               <label for="labelInput" class="form-label">   {{ $t("t-slug") }}</label>
               <input type="Text" class="form-control" id="labelInput" required v-model="Category.Slug" >
           </div>                     

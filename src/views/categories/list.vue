@@ -1,9 +1,23 @@
+<style>
+
+
+
+
+
+
+</style>
+
+
+
+
+
 <script>
 import Layout from "../../layouts/main.vue";
 import PageHeader from "@/components/page-header";
 import appConfig from "../../../app.config";
 import UniversalDataService from "/src/services/UniversalDataService";
 import CategoriesDataService from "../../services/CategoriesDataService";
+import { categories } from '../calendar/utils';
 
 export default {
   
@@ -97,9 +111,9 @@ export default {
        .then(response => {
 
                     //dispatch('notification/success', 'Получение списка прошло успешно', { root: true });
-                    this.list_items = response.data.List;
+                    this.list_items = response.data;
 
-                    console.log(response.data.List)
+                    console.log(response.data)
 
                     this.perPage = response.data.pg_length;
 
@@ -108,6 +122,11 @@ export default {
                     let i=0;
                     for(i=0; i<response.data.total_pg;i++){
                     this.pages[i]=i+1;}
+
+                   
+
+
+
                     })
                     .catch(error => {
                     //dispatch('notification/error', error, { root: true });
@@ -177,7 +196,8 @@ export default {
     
            
             <td>{{ item.id }}</td>
-            <td>{{ item.name }}</td>
+
+            <td><div :style="{'margin-left':item.level*25+'px'}">{{ item.name }}</div></td>
             <td>{{ item.slug }}</td>
            
             
