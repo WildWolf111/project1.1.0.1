@@ -17,6 +17,29 @@ import CountryDataService from "../../services/CountryDataService";
         },
         data() {
             return {
+                PageRequest: {
+            Fields: [{
+               Name :'',
+               Value:'',
+               Operation:'',
+               Order:'',
+            }],
+            PageNumber:0,
+            PageLenght:0,
+            TotalRecords:0,
+            TotalPage:0,
+        },
+      page: 1,
+      perPage: 7,
+      pages: [],
+      jsonPages: {
+                PageNumber: 0,
+                TotalRecords:0,
+      },
+       jsonFields: [{
+                name:'',
+                value: ''
+      }],
                 type_list:'countries/list',//(это часть URL)
                 main_type:'countries',//(это часть URL)
                 list_items:[],
