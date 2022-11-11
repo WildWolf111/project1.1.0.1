@@ -101,13 +101,10 @@ export default {
         "Name":this.Product.Name,
         "Slug":this.Product.Slug,
         "SKU":this.Product.SKU,
-        "short_description":this.Product.Short_description,
-        "full_description":this.Product.Full_description,
+        "short_desc":this.Product.Short_description,
+        "full_desc":this.Product.Full_description,
         "Brand": {
           "Id":parseInt(this.Product.Brand.Id)
-          },
-          "Category": {
-          "Id":parseInt(this.Product.Category.Id)
           },
         "sort":this.Product.Sort,
       };
@@ -117,7 +114,7 @@ export default {
         .then(response => {
           this.Product.id = response.data.id;
               console.log("***********************S")
-                console.log(response.data)
+                console.log(data)
           this.submitted = true;
              if (response.data.message = 200){
         
@@ -137,7 +134,43 @@ export default {
         .catch(e => {
           console.log(e);
         });
+
+   
     },
+    addCategory_Product(){
+      var product_category = {
+        "category_id": this.Product.Category.id,
+        "product_id":this.Product.id,
+          
+        };
+
+         ProductsDataService.addcategory(product_category)  
+         .then(response => {
+          this.Product.id = response.data.id;
+              console.log("***********************Cat")
+                console.log(data)
+          this.submitted = true;
+             if (response.data.message = 200){
+        
+                this.Product.Name = ""
+                this.Product.Slug = ""
+                this.Product.SKU = ""
+                this.Product.Short_description = ""
+                this.Product.Full_description = ""
+                this.Product.Brand.Id = ""
+                this.Product.Category.Id = ""
+
+        }
+        else{
+        return response.data.message}
+          
+        })
+        },
+add(){
+  this.addedProduct()
+  this.addCategory_Product()
+
+},
     
     newCompany() {
       this.submitted = false;
@@ -213,10 +246,10 @@ console.log("<<<<<<<<<<<Brands>>>>>>>>>>>>>>>")
             }
 
        
-       CategoriesDataService.getAll(this.jsonPages)
+       CategoriesDataService.getAll()
        .then(response => {
         
-    
+    console.log('++++++++++++++++++++++++')
         console.log(response.data)
 
        this.perPage = response.data.pg_length;
@@ -323,7 +356,7 @@ console.log("<<<<<<<<<<<Brands>>>>>>>>>>>>>>>")
 
 <div class="col-xxl-3 col-md-6">
     <label for="exampleDataList" class="form-label">{{ $t("t-category") }}</label>
-    <Select2 v-model.number="Product.Category.id" :options="this.Categories" />
+    <Select2 v-model.number="Product.Category.Id" :options="this.Categories" />
 </div>
 
     <p>
@@ -332,7 +365,7 @@ console.log("<<<<<<<<<<<Brands>>>>>>>>>>>>>>>")
   
      <div class="row">
      <div>
-        <b-button @click="addedProduct" variant="success" class="waves-effect waves-light" >{{ $t("t-Added") }}</b-button>       
+        <b-button @click="add"  variant="success" class="waves-effect waves-light" >{{ $t("t-Added") }}</b-button>       
         </div>             
      </div>
 

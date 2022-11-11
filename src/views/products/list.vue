@@ -16,44 +16,41 @@ export default {
 
 
       PageRequest: {
-                        Fields: [{
-                        Name :'',
-                        Value:'',
-                        Operation:'',
-                        Order:'',
-                        }],
-                        PageNumber:0,
-                        PageLenght:0,
-                        TotalRecords:0,
-                        TotalPage:0,
-                    },
-                page: 1,
-                perPage: 7,
-                pages: [],
-                OrderBy:"order_by",
-	              OrderAsc:  "order",
-                jsonPages: {
-                            PageNumber: 0,
-                            TotalRecords:0,
-                },
-                jsonFields: [{
-                            name:'',
-                            value: ''
-                }],
-
-                search:"",
+            Fields: [{
+               Name :'',
+               Value:'',
+               Operation:'',
+               Order:'',
+            }],
+            PageNumber:0,
+            PageLenght:0,
+            TotalRecords:0,
+            TotalPage:0,
+        },
+      page: 1,
+      perPage: 7,
+      pages: [],
+      jsonPages: {
+                PageNumber: 0,
+                TotalRecords:0,
+      },
+       jsonFields: [{
+                name:'',
+                value: ''
+      }],
+      search:"",
 
                 type_list:'products/list',//(это часть URL-list)
                 main_type:'products',//(это часть URL)
                 list_items:[],
-                title: "Roles",
+                title: "Products",
                 items: [
                     {
                         text: "Главная",
                         href: "/",
                     },
                     {
-                        text: "roles",
+                        text: "Products",
                         active: true,
                     },
    
@@ -90,13 +87,13 @@ export default {
        }
 
 
-       ProductsDataService.getAll(this.jsonFields,this.jsonPages)
+       ProductsDataService.getAll(this.jsonPages)
        .then(response => {
 
                     //dispatch('notification/success', 'Получение списка прошло успешно', { root: true });
                     this.list_items = response.data.List;
 
-                    console.log(response)
+                    console.log(response.data)
 
                     this.perPage = response.data.pg_length;
 

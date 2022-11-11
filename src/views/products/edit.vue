@@ -4,6 +4,7 @@ import PageHeader from "@/components/page-header";
 import appConfig from "../../../app.config";
 import ProductsDataService from "/src/services/ProductsDataService";
 import BrandsDataService from "/src/services/BrandsDataService";
+import CategoriesDataService from "/src/services/CategoriesDataService";
 import Select2 from 'vue3-select2-component';
 
 export default {
@@ -14,6 +15,12 @@ export default {
   },
   data() {
    return {
+    currentCategories:[
+    {
+            id:-1,
+            text:""
+          }
+   ],
       currentProduct:{
           Id:-1,
           Name:"",
@@ -33,6 +40,12 @@ export default {
             text:""
           }
         ],
+        Categories:[
+          {
+            id:-1,
+            text:""
+          }
+        ],
     };
     
   },
@@ -46,14 +59,41 @@ export default {
        
        ProductsDataService.get(id)
         .then(response => {
-         
-            console.log(response)
+          
+          console.log(response.data)
+
+
+
+          console.log('продукт')
+            console.log(response.data.Prod)
             if (response.status == 200){
-              this.currentProduct = response.data;
+              this.currentProduct = response.data.Prod;
+            }else{
+              this.$router.push({path: "/products"});
+            }
+
+            console.log('категории')
+              console.log(response.data.Cats)
+              if (response.status == 200){
+             
+              for(let i = 0; i < response.data.Cats.length; i++){
+
+                    let currentCategory = response.data.Cats[i];
+                    
+                    this.currentCategories[i]={
+                      
+                      id:currentCategory.id,
+
+                      text:currentCategory.name 
+
+                    };
+                  
+                    }
             }else{
               this.$router.push({path: "/products"});
               
             }
+          
           
         })
         .catch(e => {
@@ -142,13 +182,50 @@ export default {
           console.log(e);
         });
     },
+       
+    retrieveCategories(){
+      CategoriesDataService.getAll(this.jsonPages)
+       .then(response => {
+                console.log(response)
 
+                this.perPage = response.data.pg_length;
+                  
+                  this.page = response.data.pg_number;
+           
+
+                for(let i = 0; i < response.data.length; i++){
+
+                  let currentCategory = response.data[i];
+                  console.log(currentCategory)
+                  this.Categories[i]={
+                    
+                    id:currentCategory.id,
+
+                    text:currentCategory.name 
+
+                  };
+                  console.log(this.Categories)
+
+      }
+      })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+
+
+
+
+    
   },
   mounted() {
     this.message = '';
-    
+    this.retrieveBrands();
+     this.retrieveCategories();
+     console.log('111111111111111111111111111')
+     console.log(this.Categories);
     this.getProduct(this.$route.params.id);
-     this.retrieveBrands();
+ 
      
     
   }
@@ -195,11 +272,14 @@ export default {
   </div>
 
 <div class="col-xxl-3 col-md-6">
-    <label for="exampleDataList" class="form-label">{{ $t("t-brands") }}</label>
+    <label for="exampleBrands" class="form-label">{{ $t("t-brands") }}</label>
     <Select2 v-model="currentProduct.Brand.Id" :options="this.Brands"/>
 </div>
 
-      
+<div class="col-xxl-3 col-md-6" v-for="cat  in currentCategories" :key="cat.id">
+    <label for="exampleCats" class="form-label">{{ $t("t-categories") }}</label>
+    <Select2  v-model="cat.id" :options="this.Categories" />
+</div> 
 <p>
  
     </p>
